@@ -140,8 +140,6 @@ class HomeScreen extends StatelessWidget {
       children: [
         _balanceSummary(),
         SizedBox(height: 16),
-        _quickActions(),
-        SizedBox(height: 16),
         _accountsSection(),
         SizedBox(height: 16),
         _transactionsSection(),
@@ -154,54 +152,116 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _balanceSummary() {
-    return Center(
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(24),
+        color: Colors.white.withValues(alpha: 0.8),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withValues(alpha: 0.15),
+            blurRadius: 20,
+            spreadRadius: 2,
+            offset: const Offset(0, 8),
+          ),
+        ],
+        border: Border.all(
+          color: Colors.white.withValues(alpha: 0.5),
+          width: 1.5,
+        ),
+      ),
       child: Column(
         children: [
-          const Text(
-            'TOTAL BALANCE',
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'TOTAL BALANCE',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey,
+                  fontSize: 12,
+                  letterSpacing: 1.5,
+                ),
+              ),
+              Icon(Icons.more_horiz, color: Colors.grey),
+            ],
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 16),
           const Text(
             '\$48,290.45',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontSize: 38,
+              fontWeight: FontWeight.w700,
+              color: Color(0xFF1A1A2E),
+              letterSpacing: 0.5,
+            ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+            decoration: BoxDecoration(
+              color: Colors.green.shade50,
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.trending_up, color: Colors.green.shade700, size: 16),
+                const SizedBox(width: 4),
+                Text(
+                  '+2.4%',
+                  style: TextStyle(
+                    color: Colors.green.shade700,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                  ),
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  'from last month',
+                  style: TextStyle(color: Colors.grey.shade600, fontSize: 13),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 24),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.trending_up, color: Colors.green),
-              const SizedBox(width: 4),
-              const Text(
-                '+2.4% from last month',
-                style: TextStyle(color: Colors.green),
+              Expanded(
+                child: FilledButton.icon(
+                  onPressed: () {},
+                  icon: const Icon(Icons.send_outlined, size: 20),
+                  label: const Text('Send'),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: const Color(0xFF6C63FF),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: () {},
+                  icon: const Icon(Icons.request_quote_outlined, size: 20),
+                  label: const Text('Request'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: const Color(0xFF6C63FF),
+                    side: const BorderSide(color: Color(0xFF6C63FF)),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
         ],
       ),
-    );
-  }
-
-  Widget _quickActions() {
-    return Row(
-      children: [
-        Expanded(
-          child: FilledButton.icon(
-            onPressed: () {},
-            icon: const Icon(Icons.send_outlined),
-            label: const Text('Send'),
-          ),
-        ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: OutlinedButton.icon(
-            onPressed: () {},
-            icon: const Icon(Icons.request_quote_outlined),
-            label: const Text('Request'),
-          ),
-        ),
-      ],
     );
   }
 
@@ -316,21 +376,71 @@ class HomeScreen extends StatelessWidget {
 
   Widget _savingsGoalCard() {
     return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(color: Colors.grey.shade200),
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Icon(Icons.savings_outlined, color: Colors.green),
-            const SizedBox(height: 8),
+            Row(
+              children: [
+                Icon(
+                  Icons.savings_outlined,
+                  color: Colors.green.shade700,
+                  size: 24,
+                ),
+                const SizedBox(width: 12),
+                const Text(
+                  'Savings Goal',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                ),
+                const Spacer(),
+                Text(
+                  '75%',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green.shade700,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
             const Text(
-              'Savings Goal',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              'New Car Goal',
+              style: TextStyle(fontSize: 14, color: Colors.grey),
             ),
             const SizedBox(height: 8),
-            const Text('New Car Goal: 75% achieved'),
+            TweenAnimationBuilder(
+              tween: Tween<double>(begin: 0, end: 0.75),
+              duration: const Duration(seconds: 1),
+              builder: (context, value, child) => LinearProgressIndicator(
+                value: value,
+                minHeight: 8,
+                backgroundColor: Colors.grey.shade200,
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  value < 0.75 ? Colors.green.shade400 : Colors.green.shade700,
+                ),
+              ),
+            ),
             const SizedBox(height: 4),
-            LinearProgressIndicator(value: 0.75, color: Colors.green),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '\$0',
+                  style: TextStyle(fontSize: 11, color: Colors.grey.shade500),
+                ),
+                Text(
+                  '\$10.000',
+                  style: TextStyle(fontSize: 11, color: Colors.grey.shade500),
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -339,20 +449,50 @@ class HomeScreen extends StatelessWidget {
 
   Widget _monthlyInsightsCard() {
     return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(color: Colors.grey.shade200),
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
+        padding: const EdgeInsets.all(20),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Icon(Icons.insights),
-            const SizedBox(height: 16),
-            const Text(
-              'Monthly Insight',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.blue.shade50,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.insights,
+                color: Colors.blue.shade700,
+                size: 24,
+              ),
             ),
-            const SizedBox(height: 8),
-            const Text(
-              'You spent 12% less on dining out compared to last month!',
+            const SizedBox(width: 16),
+            const Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Monthly Insight',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    'You spent 12% less on dining out compared to last month!',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                      height: 1.3,
+                    ),
+                  ),
+                ],
+              ),
             ),
+            Icon(Icons.arrow_forward, color: Colors.grey.shade400, size: 16),
           ],
         ),
       ),
